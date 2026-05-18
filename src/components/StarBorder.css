@@ -1,0 +1,44 @@
+.star-border-container {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  border-radius: 9999px;
+  background: transparent;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+}
+
+.border-gradient-bottom,
+.border-gradient-top {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  z-index: -1;
+  transform: translate(-50%, -50%);
+  animation: star-border-spin linear infinite;
+}
+
+.border-gradient-bottom {
+  animation-direction: reverse;
+}
+
+.inner-content {
+  position: relative;
+  /* 恢复为网页原版底色，防止白线穿透，同时不破坏透明度 */
+  background: #05030a;
+  border-radius: 9999px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+@keyframes star-border-spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
