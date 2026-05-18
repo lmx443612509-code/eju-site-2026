@@ -38,42 +38,43 @@ export default function InfoSection() {
   }
 
   return (
-    <section className="w-full bg-transparent pb-32 pt-12 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-8 md:px-16 lg:px-24 relative z-10 flex flex-col gap-24">
+    <section className="w-full bg-transparent pb-24 md:pb-32 pt-12 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 md:px-16 lg:px-24 relative z-10 flex flex-col gap-20 md:gap-24">
         
         {/* ================= 1. 即将上线的功能 ================= */}
         <div>
-          <div className="mb-12 flex flex-col items-center md:items-start text-center md:text-left">
-            <h2 className="text-2xl md:text-3xl font-bold mb-3 tracking-wider flex items-center gap-3" style={glassHeadingStyle}>
-              <svg className="w-7 h-7 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+          <div className="mb-10 md:mb-12 flex flex-col items-center md:items-start text-center md:text-left">
+            <h2 className="text-xl md:text-3xl font-bold mb-3 md:mb-4 tracking-wider flex items-center gap-2.5" style={glassHeadingStyle}>
+              <svg className="w-6 h-6 md:w-7 md:h-7 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
               </svg>
               即将上线的功能
             </h2>
-            <p className="text-sm font-light tracking-widest" style={crispTextStyle}>
+            <p className="text-xs md:text-sm font-light tracking-widest px-4 md:px-0" style={crispTextStyle}>
               正在开发中的主要功能。上线时将通过邮件通知您。
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {upcomingFeatures.map((feature, i) => (
-              <div key={feature.id} className="relative flex flex-col p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-all overflow-hidden">
+              <div key={feature.id} className="relative flex flex-col p-6 md:p-8 rounded-[24px] md:rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-all overflow-hidden">
 
                 <div className="flex items-start gap-3 mb-5">
-                  <div className="w-10 h-10 shrink-0 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shadow-[inset_0_1px_4px_rgba(255,255,255,0.1)]">
+                  <div className="w-9 h-9 md:w-10 md:h-10 shrink-0 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shadow-[inset_0_1px_4px_rgba(255,255,255,0.1)]">
                     {feature.icon}
                   </div>
                   
-                  <h3 className="text-xl font-semibold text-white tracking-widest flex items-center flex-wrap gap-2.5 mt-1.5" style={{ fontFamily: "'Noto Serif SC', serif", textShadow: "0 2px 6px rgba(0,0,0,0.3)" }}>
+                  {/* 微调这里的 gap */}
+                  <h3 className="text-lg md:text-xl font-semibold text-white tracking-widest flex items-center flex-wrap gap-1 md:gap-2.5 mt-1" style={{ fontFamily: "'Noto Serif SC', serif", textShadow: "0 2px 6px rgba(0,0,0,0.3)" }}>
                     {feature.title}
                     <span className="inline-flex items-center gap-1.5 translate-y-[1px]" style={{ textShadow: "none" }}>
                       <span className="w-1.5 h-1.5 rounded-full bg-white/40 animate-pulse"></span>
-                      <span className="text-white/40 text-[11px] tracking-[0.15em] font-light">准备中</span>
+                      <span className="text-white/40 text-[10px] md:text-[11px] tracking-[0.15em] font-light">准备中</span>
                     </span>
                   </h3>
                 </div>
 
-                <p className="text-sm font-light leading-relaxed tracking-wider" style={crispTextStyle}>
+                <p className="text-xs md:text-sm font-light leading-relaxed tracking-wider text-white/80" style={crispTextStyle}>
                   {feature.desc}
                 </p>
               </div>
@@ -83,19 +84,19 @@ export default function InfoSection() {
 
         {/* ================= 2. 奇点教育团队 ================= */}
         <div>
-          <div className="mb-12 flex flex-col items-center md:items-start text-center md:text-left">
-            <h2 className="text-2xl md:text-3xl font-bold mb-3 tracking-wider flex items-center gap-3" style={glassHeadingStyle}>
-              <svg className="w-7 h-7 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+          <div className="mb-10 md:mb-12 flex flex-col items-center md:items-start text-center md:text-left">
+            <h2 className="text-xl md:text-3xl font-bold mb-3 md:mb-4 tracking-wider flex items-center gap-2.5" style={glassHeadingStyle}>
+              <svg className="w-6 h-6 md:w-7 md:h-7 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
               奇点教育团队
             </h2>
-            <p className="text-sm font-light tracking-widest max-w-2xl" style={crispTextStyle}>
+            <p className="text-xs md:text-sm font-light tracking-widest max-w-2xl px-4 md:px-0" style={crispTextStyle}>
               由资深工程师、教育从业者、前留学生组成的团队，全力支持每一位备战 EJU 的留学生。
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {teamMembers.map((member, i) => (
               <motion.div
                 key={member.id}
@@ -103,22 +104,22 @@ export default function InfoSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="group relative flex flex-col p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md transition-all duration-500 hover:-translate-y-2 hover:bg-white/10 overflow-hidden"
+                className="group relative flex flex-col p-6 md:p-8 rounded-[24px] md:rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md transition-all duration-500 hover:-translate-y-2 hover:bg-white/10 overflow-hidden"
               >
                 <div className="flex flex-col gap-4 mb-5">
-                  <div className="w-12 h-12 shrink-0 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center shadow-[inset_0_1px_4px_rgba(255,255,255,0.1)] group-hover:bg-white/10 transition-colors">
+                  <div className="w-11 h-11 md:w-12 md:h-12 shrink-0 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center shadow-[inset_0_1px_4px_rgba(255,255,255,0.1)] group-hover:bg-white/10 transition-colors">
                     {member.icon}
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-white tracking-widest mb-1.5" style={{ fontFamily: "'Noto Serif SC', serif", textShadow: "0 2px 6px rgba(0,0,0,0.3)" }}>
+                    <h3 className="text-lg md:text-xl font-semibold text-white tracking-widest mb-1.5" style={{ fontFamily: "'Noto Serif SC', serif", textShadow: "0 2px 6px rgba(0,0,0,0.3)" }}>
                       {member.role}
                     </h3>
-                    <div className="inline-block px-2.5 py-1 rounded bg-white/5 border border-white/5 text-white/50 text-xs tracking-wider" style={{ textShadow: "0 1px 2px rgba(0,0,0,0.4)" }}>
+                    <div className="inline-block px-2 py-0.5 md:px-2.5 md:py-1 rounded bg-white/5 border border-white/5 text-white/50 text-[10px] md:text-xs tracking-wider" style={{ textShadow: "0 1px 2px rgba(0,0,0,0.4)" }}>
                       {member.tag}
                     </div>
                   </div>
                 </div>
-                <p className="text-sm font-light leading-relaxed tracking-wider" style={crispTextStyle}>
+                <p className="text-xs md:text-sm font-light leading-relaxed tracking-wider text-white/80" style={crispTextStyle}>
                   {member.desc}
                 </p>
               </motion.div>
@@ -131,18 +132,18 @@ export default function InfoSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="relative w-full rounded-[2rem] bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-all p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 overflow-hidden"
+          className="relative w-full rounded-[24px] md:rounded-[2rem] bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-all p-8 md:p-12 flex flex-col lg:flex-row items-center justify-between gap-8 overflow-hidden"
         >
-          <div className="flex flex-col text-center md:text-left relative z-10">
-            <h2 className="text-2xl font-semibold mb-2 tracking-widest" style={{ fontFamily: "'Noto Serif SC', serif", textShadow: "0 2px 8px rgba(0,0,0,0.4)" }}>联系我们</h2>
-            <p className="text-sm tracking-widest" style={crispTextStyle}>欢迎加入团队、合作或求职咨询。</p>
+          <div className="flex flex-col text-center lg:text-left relative z-10 max-w-lg">
+            <h2 className="text-xl md:text-2xl font-semibold mb-2 tracking-widest text-white/95" style={{ fontFamily: "'Noto Serif SC', serif", textShadow: "0 2px 8px rgba(0,0,0,0.4)" }}>联系我们</h2>
+            <p className="text-xs md:text-sm tracking-widest Text-white/80" style={crispTextStyle}>欢迎加入团队、合作或求职咨询。</p>
           </div>
 
-          <a href="mailto:contact@eju.aircore.org" className="relative group/mail flex items-center justify-center z-10">
+          <a href="mailto:contact@eju.aircore.org" className="relative group/mail flex items-center justify-center z-10 w-full lg:w-auto">
             <div className="absolute inset-0 bg-white/5 rounded-full blur-md group-hover:bg-white/10 transition-all duration-500"></div>
-            <div className="relative px-8 py-4 rounded-full bg-white/5 border border-white/10 backdrop-blur-md flex items-center gap-3 transition-all duration-500 group-hover:scale-95 group-hover:bg-white/10 cursor-pointer">
-              <svg className="w-5 h-5 text-white/70 group-hover/mail:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-              <span className="text-white/95 text-[15px] font-semibold tracking-[0.1em]" style={{ textShadow: "0 1px 4px rgba(0,0,0,0.3)" }}>contact@eju.aircore.org</span>
+            <div className="relative w-full text-center px-6 py-3 md:px-8 md:py-4 rounded-full bg-white/5 border border-white/10 backdrop-blur-md flex items-center justify-center gap-2.5 transition-all duration-500 group-hover:scale-95 group-hover:bg-white/10 cursor-pointer">
+              <svg className="w-4 h-4 md:w-5 md:h-5 text-white/70 group-hover/mail:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+              <span className="text-white/95 text-sm md:text-[15px] font-medium md:font-semibold tracking-wider" style={{ textShadow: "0 1px 4px rgba(0,0,0,0.3)" }}>contact@eju.aircore.org</span>
             </div>
           </a>
         </motion.div>

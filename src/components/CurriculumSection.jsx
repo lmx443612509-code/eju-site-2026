@@ -3,9 +3,6 @@ import { Canvas, useFrame, extend, useThree } from '@react-three/fiber';
 import { Stars, useTexture, shaderMaterial, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 
-// ==========================================
-// 1. 星系着色器与宇宙组件
-// ==========================================
 const GalaxyDiskMaterial = shaderMaterial(
   { uTexture: new THREE.Texture(), uTime: 0 },
   `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
@@ -36,7 +33,7 @@ const GalaxyDiskMaterial = shaderMaterial(
 extend({ GalaxyDiskMaterial });
 
 function HolographicGalaxy() {
-  const texture = useTexture('/galaxy.jpg'); // 确保 public 目录下有这个图，否则会黑屏，但这不影响逻辑
+  const texture = useTexture('/galaxy.jpg');
   const { gl } = useThree(); 
   useEffect(() => {
     texture.colorSpace = THREE.SRGBColorSpace;
@@ -65,7 +62,6 @@ function HolographicGalaxy() {
 function InteractivePlanet({ id, name, orbitRadius, size, orbitSpeed, startAngle, texturePath, activePlanet, setActivePlanet, setHoveredPlanet, isPaused }) {
   const groupRef = useRef();
   const planetMeshRef = useRef();
-  // 注意：如果本地没有 p1.png 等，星球会渲染不出来，测试时可以注释掉材质，或确保本地有图
   const colorMap = useTexture(texturePath); 
   colorMap.colorSpace = THREE.SRGBColorSpace; 
   const currentAngle = useRef(startAngle);
@@ -110,9 +106,6 @@ function InteractivePlanet({ id, name, orbitRadius, size, orbitSpeed, startAngle
   );
 }
 
-// ==========================================
-// 2. 暗黑学习面板组件 (图2: 课程选择)
-// ==========================================
 function LMSDashboard({ onPlayVideo, onBack }) {
   const lessons = [
     { id: 1, title: "第1讲 多项式与因式分解", time: "16:01", locked: false },
@@ -125,11 +118,10 @@ function LMSDashboard({ onPlayVideo, onBack }) {
 
   return (
     <div className="absolute inset-0 z-50 bg-[#12100e] overflow-y-auto pb-24 text-white">
-      {/* 顶部导航 */}
-      <div className="flex items-center justify-between px-10 py-6 border-b border-white/10 bg-white/5 backdrop-blur-md sticky top-0 z-10">
-        <div className="flex items-center gap-8">
+      <div className="flex flex-col md:flex-row items-center justify-between px-6 md:px-10 py-6 border-b border-white/10 bg-white/5 backdrop-blur-md sticky top-0 z-10">
+        <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8 mb-4 md:mb-0">
           <h1 className="text-2xl font-bold tracking-widest text-[#b38b6d]" style={{ fontFamily: "'Noto Serif SC', serif" }}>奇点教育</h1>
-          <nav className="flex gap-6 text-sm tracking-widest text-white/60">
+          <nav className="flex gap-4 md:gap-6 text-sm tracking-widest text-white/60">
             <span className="text-white border-b-2 border-[#b38b6d] pb-1">学习</span>
             <span className="hover:text-white cursor-pointer transition-colors">学习面板</span>
             <span className="hover:text-white cursor-pointer transition-colors">个人中心</span>
@@ -138,18 +130,16 @@ function LMSDashboard({ onPlayVideo, onBack }) {
         <button onClick={onBack} className="px-5 py-2 rounded-full border border-white/10 text-xs tracking-widest hover:bg-white/10 transition-colors">返回宇宙</button>
       </div>
 
-      {/* 主体内容 */}
       <div className="max-w-6xl mx-auto mt-12 px-6">
-        <h2 className="text-4xl font-bold mb-10 tracking-widest" style={{ fontFamily: "'Noto Serif SC', serif" }}>数学课程 1</h2>
+        <h2 className="text-3xl md:text-4xl font-bold mb-10 tracking-widest text-center md:text-left" style={{ fontFamily: "'Noto Serif SC', serif" }}>数学课程 1</h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {lessons.map((lesson) => (
             <div 
               key={lesson.id} 
               onClick={() => !lesson.locked && onPlayVideo()}
               className={`relative flex flex-col p-4 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md transition-all ${lesson.locked ? 'opacity-60 cursor-not-allowed' : 'hover:bg-white/10 cursor-pointer group'}`}
             >
-              {/* 封面占位图 */}
               <div className="w-full h-48 rounded-2xl bg-[#1a1512] flex items-center justify-center relative overflow-hidden mb-4 border border-white/5">
                 <div className="absolute inset-0 bg-gradient-to-br from-[#b38b6d]/20 to-transparent"></div>
                 {lesson.locked ? (
@@ -162,7 +152,6 @@ function LMSDashboard({ onPlayVideo, onBack }) {
               <div className="px-2 pb-2">
                 <span className="text-[10px] px-2 py-1 bg-[#b38b6d]/20 text-[#b38b6d] rounded-md tracking-wider mr-2">lesson 0{lesson.id}</span>
                 <h3 className="text-lg font-bold mt-3 text-white/90">{lesson.title}</h3>
-                {/* 底部微型进度条 */}
                 {!lesson.locked && <div className="w-full h-1 bg-white/10 rounded-full mt-4 overflow-hidden"><div className="w-1/3 h-full bg-[#b38b6d]"></div></div>}
               </div>
             </div>
@@ -173,33 +162,26 @@ function LMSDashboard({ onPlayVideo, onBack }) {
   );
 }
 
-// ==========================================
-// 3. 沉浸式视频播放器 (图3: 播放界面)
-// ==========================================
 function VideoPlayer({ onBack }) {
   return (
     <div className="absolute inset-0 z-50 bg-[#0a0807] flex flex-col h-screen text-white overflow-hidden">
-      {/* 极简顶栏 */}
-      <div className="flex items-center justify-between px-6 py-4 border-b border-white/5">
+      <div className="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-[#0a0807] z-10">
         <button onClick={onBack} className="flex items-center gap-2 text-white/60 hover:text-white transition-colors text-sm tracking-widest">
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
-          返回课程目录
+          <span className="hidden md:inline">返回课程目录</span><span className="inline md:hidden">返回</span>
         </button>
         <span className="text-xs text-[#b38b6d] border border-[#b38b6d]/30 px-3 py-1 rounded-full">剧场模式开启</span>
       </div>
 
-      <div className="flex flex-1 p-6 gap-6 h-full min-h-0">
-        {/* 左侧：播放器核心 */}
+      <div className="flex flex-col-reverse md:flex-row flex-1 p-4 md:p-6 gap-4 md:gap-6 min-h-0 overflow-y-auto">
         <div className="flex-1 flex flex-col min-w-0">
-          <div className="w-full aspect-video bg-black rounded-3xl border border-white/10 flex items-center justify-center relative shadow-2xl overflow-hidden">
-             {/* 伪装播放画面 */}
-             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#1a1512]/90 flex flex-col justify-end p-8">
-                <h1 className="text-4xl font-bold tracking-widest mb-4" style={{ fontFamily: "'Noto Serif SC', serif" }}>第1讲 多项式与因式分解</h1>
-                <p className="text-white/50 tracking-widest text-sm">EJU 数学课程 1 讲座</p>
+          <div className="w-full aspect-video bg-black rounded-3xl border border-white/10 flex items-center justify-center relative shadow-2xl overflow-hidden mb-6">
+             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#1a1512]/90 flex flex-col justify-end p-4 md:p-8">
+                <h1 className="text-2xl md:text-4xl font-bold tracking-widest mb-2 md:mb-4" style={{ fontFamily: "'Noto Serif SC', serif" }}>第1讲 多项式与因式分解</h1>
+                <p className="text-white/50 tracking-widest text-xs">EJU 数学课程 1 讲座</p>
              </div>
-             {/* 播放控制条 (UI 模拟) */}
-             <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/80 to-transparent flex items-end px-6 pb-4">
-                <div className="w-full flex items-center gap-4">
+             <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/80 to-transparent flex items-end px-4 md:px-6 pb-3 md:pb-4">
+                <div className="w-full flex items-center gap-3 md:gap-4">
                   <svg className="w-5 h-5 text-white cursor-pointer" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" /></svg>
                   <span className="text-xs tracking-wider text-white/70">12:45 / 16:01</span>
                   <div className="flex-1 h-1.5 bg-white/20 rounded-full cursor-pointer relative"><div className="absolute left-0 top-0 bottom-0 w-3/4 bg-[#b38b6d] rounded-full"></div></div>
@@ -207,19 +189,17 @@ function VideoPlayer({ onBack }) {
                 </div>
              </div>
           </div>
-          
-          <div className="mt-6 flex gap-4">
-             <button className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-sm tracking-widest hover:bg-white/10 transition-colors flex items-center gap-2"><svg className="w-4 h-4 text-[#b38b6d]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>AI 助教答疑</button>
-             <button className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-sm tracking-widest hover:bg-white/10 transition-colors flex items-center gap-2"><svg className="w-4 h-4 text-[#b38b6d]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>随堂练习</button>
+          <div className="flex gap-4">
+             <button className="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-xs tracking-widest hover:bg-white/10 transition-colors flex items-center justify-center gap-2"><svg className="w-4 h-4 text-[#b38b6d]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>AI 助教答疑</button>
+             <button className="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-xs tracking-widest hover:bg-white/10 transition-colors flex items-center justify-center gap-2"><svg className="w-4 h-4 text-[#b38b6d]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>随堂练习</button>
           </div>
         </div>
 
-        {/* 右侧：章节侧边栏 */}
-        <div className="w-80 bg-white/5 border border-white/10 rounded-3xl p-5 flex flex-col backdrop-blur-md h-full">
+        <div className="w-full md:w-80 bg-white/5 border border-white/10 rounded-3xl p-5 flex flex-col backdrop-blur-md h-full min-h-0">
           <h3 className="text-lg font-bold tracking-widest mb-4 border-b border-white/10 pb-4" style={{ fontFamily: "'Noto Serif SC', serif" }}>章节目录</h3>
-          <div className="flex-1 overflow-y-auto pr-2 space-y-1 custom-scrollbar">
+          <div className="flex-1 overflow-y-auto pr-2 space-y-1 custom-scrollbar min-h-0">
             {['学习目标', '单项式与多项式', '同类项', '展开定义', '展开公式(基本3个)', '展开公式(应用5个)', '例题1 提示', '例题1 解答'].map((chapter, idx) => (
-              <div key={idx} className={`px-4 py-3 rounded-xl cursor-pointer transition-colors text-sm tracking-wider flex items-center gap-4 ${idx === 1 ? 'bg-[#b38b6d]/20 text-[#b38b6d]' : 'hover:bg-white/5 text-white/70'}`}>
+              <div key={idx} className={`px-4 py-3 rounded-xl cursor-pointer transition-colors text-xs tracking-wider flex items-center gap-4 ${idx === 1 ? 'bg-[#b38b6d]/20 text-[#b38b6d]' : 'hover:bg-white/5 text-white/70'}`}>
                 <span className="opacity-50 text-xs">0{idx + 1}</span>
                 {chapter}
               </div>
@@ -231,17 +211,11 @@ function VideoPlayer({ onBack }) {
   );
 }
 
-// ==========================================
-// 4. 核心主控组件 (掌控宇宙到UI的切换)
-// ==========================================
 export default function CurriculumSection() {
   const [activePlanet, setActivePlanet] = useState(null);
   const [hoveredPlanet, setHoveredPlanet] = useState(null);
-  
-  // 核心状态控制系统：'universe' | 'dashboard' | 'video'
   const [currentView, setCurrentView] = useState('universe'); 
   const [isWarping, setIsWarping] = useState(false);
-
   const isPaused = activePlanet !== null || hoveredPlanet !== null;
 
   const planetsData = [
@@ -256,19 +230,17 @@ export default function CurriculumSection() {
 
   const activePlanetData = planetsData.find(p => p.id === activePlanet);
 
-  // 触发白场并切换到学习面板
   const handleStartLearning = () => {
     setIsWarping(true);
     setTimeout(() => {
       setCurrentView('dashboard');
-      setIsWarping(false); // 切换后白场消失
+      setIsWarping(false); 
     }, 1000);
   };
 
   return (
-    <section style={{ width: '100vw', height: '100vh', flex: 'none', backgroundColor: '#000000', position: 'relative', overflow: 'hidden' }}>
+    <section className="w-screen h-screen flex-none bg-[#000000] relative overflow-hidden">
       
-      {/* 极速白场跃迁覆盖层 */}
       <div 
         style={{
           position: 'fixed', inset: 0, zIndex: 9999, backgroundColor: '#ffffff',
@@ -278,33 +250,29 @@ export default function CurriculumSection() {
         }}
       />
 
-      {/* 视图 1：宇宙主界面 */}
       {currentView === 'universe' && (
         <>
-          <div style={{ position: 'absolute', top: '8%', left: '50%', transform: 'translateX(-50%)', zIndex: 10, textAlign: 'center', pointerEvents: 'none', opacity: activePlanet ? 0 : 1, transition: 'opacity 0.5s' }}>
-            <h2 style={{ fontSize: '3rem', color: '#fff', textShadow: '0 0 20px #fff', margin: '0 0 5px 0', letterSpacing: '4px' }}>THE EJU UNIVERSE</h2>
-            <p style={{ color: '#ffffff', fontSize: '1rem', letterSpacing: '2px', margin: 0, opacity: 0.7 }}>鼠标悬停锁定目标 • 点击进入沉浸航线</p>
+          <div className="absolute top-[8%] left-1/2 -translate-x-1/2 z-10 text-center pointer-events-none transition-opacity duration-500" style={{ opacity: activePlanet ? 0 : 1 }}>
+            <h2 className="text-3xl md:text-5xl lg:text-6xl text-white font-bold mb-2 tracking-wider" style={{ textShadow: '0 0 20px #fff' }}>THE EJU UNIVERSE</h2>
+            <p className="text-white/70 text-xs md:text-sm lg:text-base tracking-widest">鼠标悬停锁定目标 • 点击进入沉浸航线</p>
           </div>
 
           {activePlanetData && (
             <div 
-              className="bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-all"
-              style={{ 
-                position: 'absolute', top: '50%', left: '8%', transform: 'translateY(-50%)', 
-                zIndex: 20, padding: '40px', borderRadius: '24px', 
-                width: '380px', pointerEvents: 'auto',
-                opacity: isWarping ? 0 : 1, 
-                transition: 'opacity 0.3s'
-            }}>
-              <button onClick={() => setActivePlanet(null)} style={{ position: 'absolute', top: '20px', right: '20px', background: 'transparent', border: 'none', color: '#fff', fontSize: '1.2rem', cursor: 'pointer', opacity: 0.5 }}>✕</button>
-              <h2 style={{ color: '#ffffff', margin: '0 0 10px 0', fontSize: '2.5rem' }}>{activePlanetData.name}</h2>
-              <p style={{ color: '#cbd5e1', fontSize: '1rem', lineHeight: '1.6', margin: '0 0 30px 0', opacity: 0.7 }}>
+              className={`bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-all duration-300 pointer-events-auto
+                fixed bottom-0 left-0 w-full p-6 pb-12 rounded-t-[24px] rounded-b-0
+                md:absolute md:top-1/2 md:left-8 md:bottom-auto md:w-[380px] md:translate-y-[-50%] md:p-10 md:rounded-3xl ${isWarping ? 'opacity-0' : 'opacity-100'}
+              `}
+              style={{ zIndex: 20 }}
+            >
+              <button onClick={() => setActivePlanet(null)} className="absolute top-5 right-5 background-transparent border-none text-white text-lg cursor-pointer opacity-50 hover:opacity-100 transition-opacity">✕</button>
+              <h2 className="text-white text-3xl md:text-4xl font-semibold mb-3 tracking-wider">{activePlanetData.name}</h2>
+              <p className="text-[#cbd5e1]/70 text-sm md:text-base leading-relaxed mb-8 tracking-wide">
                 这里是专属于 {activePlanetData.name} 课程的核心学习舱。准备好开始你的探索了吗？
               </p>
               <button 
                 onClick={handleStartLearning}
-                className="bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-all"
-                style={{ width: '100%', padding: '15px', color: '#fff', fontSize: '1.2rem', fontWeight: 'bold', borderRadius: '12px', cursor: 'pointer' }}
+                className="w-full p-4 text-white text-base md:text-lg font-bold rounded-xl cursor-pointer bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-all tracking-widest"
               >
                 开始学习
               </button>
@@ -327,7 +295,6 @@ export default function CurriculumSection() {
         </>
       )}
 
-      {/* 视图 2：LMS 面板 (图2) */}
       {currentView === 'dashboard' && (
         <LMSDashboard 
           onPlayVideo={() => setCurrentView('video')} 
@@ -335,7 +302,6 @@ export default function CurriculumSection() {
         />
       )}
 
-      {/* 视图 3：沉浸式播放器 (图3) */}
       {currentView === 'video' && (
         <VideoPlayer 
           onBack={() => setCurrentView('dashboard')} 
