@@ -1,7 +1,5 @@
 "use client"
 
-import { PulsingBorder } from "@paper-design/shaders-react"
-import { motion } from "framer-motion"
 import React from "react"
 
 const GlassContainer = ({ children, className = "", style = {}, onClick }) => (
@@ -20,7 +18,7 @@ const GlassContainer = ({ children, className = "", style = {}, onClick }) => (
   </div>
 )
 
-export default function HeroSection({ onOpenModal, onOpenSignup, onOpenAI }) {
+export default function HeroSection({ onOpenModal, onOpenSignup }) {
   const glassHeadingStyle = {
     color: "transparent",
     WebkitTextStroke: "1px rgba(255, 255, 255, 0.35)",
@@ -36,76 +34,35 @@ export default function HeroSection({ onOpenModal, onOpenSignup, onOpenAI }) {
   }
 
   return (
-    <section className="min-h-screen w-full relative overflow-hidden bg-transparent flex flex-col">
-      <svg className="absolute inset-0 w-0 h-0">
-        <defs>
-          <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox">
-            <feTurbulence type="fractalNoise" baseFrequency="0.001 0.005" numOctaves="1" seed="17" result="turbulence" />
-            <feGaussianBlur in="turbulence" stdDeviation="3" result="softMap" />
-            <feDisplacementMap in="SourceGraphic" in2="softMap" scale="12" xChannelSelector="R" yChannelSelector="G" />
-          </filter>
-        </defs>
-      </svg>
-
-      <main className="relative z-20 flex-1 flex flex-col justify-center px-8 md:px-16 lg:px-24 pt-24 pb-12 max-w-5xl">
+    // 👑 修复：加入了 min-h-[100svh] 保证首屏高度独立
+    <section className="min-h-[100svh] w-full relative overflow-hidden bg-transparent flex flex-col justify-center">
+      <main className="relative z-20 px-6 md:px-16 lg:px-24 max-w-5xl">
         <div className="text-left max-w-[660px]">
-          <div className="mb-10 flex justify-center w-full">
-            <GlassContainer className="rounded-full px-6 py-2 border border-white/10 inline-flex">
-              <span className="text-white/85 text-[13px] font-medium tracking-[0.25em]" style={{ textShadow: "0 1px 4px rgba(0,0,0,0.4)" }}>奇点EJU · AI 线上备考系统</span>
+          <div className="mb-8 md:mb-10 flex justify-start w-full">
+            <GlassContainer className="rounded-full px-5 py-2 md:px-6 md:py-2 border border-white/10 inline-flex">
+              <span className="text-white/85 text-[10px] md:text-[13px] font-medium tracking-[0.25em]" style={{ textShadow: "0 1px 4px rgba(0,0,0,0.4)" }}>奇点EJU · AI 线上备考系统</span>
             </GlassContainer>
           </div>
 
-          <h1 className="text-5xl md:text-7xl tracking-tighter font-bold mb-10 leading-[1.15]" style={{ fontFamily: "'Noto Serif SC', serif" }}>
-            <span style={glassHeadingStyle} className="block mb-3">专为日本留学生考试</span>
+          <h1 className="text-4xl sm:text-5xl md:text-7xl tracking-tighter font-bold mb-8 md:mb-10 leading-[1.2] md:leading-[1.15]" style={{ fontFamily: "'Noto Serif SC', serif" }}>
+            <span style={glassHeadingStyle} className="block mb-2 md:mb-3">专为日本留学生考试</span>
             <span style={glassHeadingStyle} className="block">设计的高效突破系统</span>
           </h1>
 
-          <p className="text-lg md:text-xl font-normal mb-16 leading-relaxed max-w-2xl tracking-widest" style={crispTextStyle}>
+          <p className="text-sm sm:text-base md:text-xl font-normal mb-12 md:mb-16 leading-relaxed max-w-2xl tracking-widest text-white/80 md:text-white/90" style={crispTextStyle}>
             渡来教育·奇点EJU，面向日本留学生考试（EJU）的新一代AI线上备考系统。内容全面对标2026最新考纲，全程假名标音，让任何水平的学生都能直接看懂课程。
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-between w-full gap-6">
-            <GlassContainer onClick={onOpenSignup} className="rounded-full px-12 py-5 cursor-pointer hover:scale-95 transition-all duration-500 w-full sm:w-auto">
-              <span className="text-white/95 font-semibold text-[17px] tracking-[0.2em]" style={{ textShadow: "0 1px 4px rgba(0,0,0,0.3)" }}>免费开始</span>
+          <div className="flex flex-col sm:flex-row items-start justify-start w-full gap-4 md:gap-6">
+            <GlassContainer onClick={onOpenSignup} className="rounded-full w-full sm:w-auto px-8 py-4 md:px-12 md:py-5 cursor-pointer hover:scale-[0.98] transition-all duration-500">
+              <span className="text-white/95 font-semibold text-[15px] md:text-[17px] tracking-[0.2em]" style={{ textShadow: "0 1px 4px rgba(0,0,0,0.3)" }}>免费开始</span>
             </GlassContainer>
-            <GlassContainer onClick={onOpenModal} className="rounded-full px-12 py-5 cursor-pointer hover:scale-95 transition-all duration-500 w-full sm:w-auto">
-              <span className="text-white/95 font-semibold text-[17px] tracking-[0.2em]" style={{ textShadow: "0 1px 4px rgba(0,0,0,0.3)" }}>查看课程</span>
+            <GlassContainer onClick={onOpenModal} className="rounded-full w-full sm:w-auto px-8 py-4 md:px-12 md:py-5 cursor-pointer hover:scale-[0.98] transition-all duration-500">
+              <span className="text-white/95 font-semibold text-[15px] md:text-[17px] tracking-[0.2em]" style={{ textShadow: "0 1px 4px rgba(0,0,0,0.3)" }}>查看课程</span>
             </GlassContainer>
           </div>
         </div>
       </main>
-
-      <div className="absolute bottom-12 right-12 z-30 pointer-events-auto">
-        <motion.div 
-          onClick={onOpenAI} 
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.85 }}
-          className="group relative w-24 h-24 flex items-center justify-center cursor-pointer"
-        >
-          <div className="absolute inset-0 flex items-center justify-center opacity-85 group-hover:opacity-100 transition-opacity duration-500 z-10">
-            <PulsingBorder 
-              colors={["#BEECFF", "#E77EDC", "#FF4C3E", "#00FF88", "#FFD700"]} 
-              colorBack="#00000000" 
-              speed={1.5} 
-              roundness={1} 
-              thickness={0.1} 
-              softness={0.2} 
-              intensity={5} 
-              spotsPerColor={5} 
-              spotSize={0.1} 
-              pulse={0.1} 
-              smoke={0.5} 
-              smokeSize={4} 
-              scale={0.65} 
-              rotation={0} 
-              frame={9161408} 
-              style={{ width: "70px", height: "70px", borderRadius: "50%" }} 
-            />
-          </div>
-
-          <motion.svg className="absolute inset-0 w-full h-full text-white/50 group-hover:text-white transition-colors duration-500 z-20 pointer-events-none" viewBox="0 0 100 100" animate={{ rotate: 360 }} transition={{ duration: 25, repeat: Number.POSITIVE_INFINITY, ease: "linear" }} style={{ transform: "scale(1.7)" }}><defs><path id="circle" d="M 50, 50 m -38, 0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" /></defs><text className="text-[10px] font-semibold tracking-[0.22em]" fill="currentColor"><textPath href="#circle" startOffset="0%">奇点 EJU AI 助手 • 奇点 EJU AI 助手 • 奇点 EJU AI 助手 • </textPath></text></motion.svg>
-        </motion.div>
-      </div>
     </section>
   )
 }

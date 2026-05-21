@@ -4,7 +4,7 @@ import React from "react"
 import { motion } from "framer-motion"
 
 const InfoIcon = ({ children }) => (
-  <svg className="w-6 h-6 text-white/85 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+  <svg className="w-6 h-6 text-white/90 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
     {children}
   </svg>
 )
@@ -33,8 +33,8 @@ export default function InfoSection() {
   }
 
   const crispTextStyle = {
-    color: "rgba(255, 255, 255, 0.9)",
-    textShadow: "0 2px 8px rgba(0, 0, 0, 0.5)",
+    color: "rgba(255, 255, 255, 0.95)",
+    textShadow: "0 2px 4px rgba(0, 0, 0, 0.6)",
   }
 
   return (
@@ -45,7 +45,7 @@ export default function InfoSection() {
         <div>
           <div className="mb-10 md:mb-12 flex flex-col items-center md:items-start text-center md:text-left">
             <h2 className="text-xl md:text-3xl font-bold mb-3 md:mb-4 tracking-wider flex items-center gap-2.5" style={glassHeadingStyle}>
-              <svg className="w-6 h-6 md:w-7 md:h-7 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <svg className="w-6 h-6 md:w-7 md:h-7 text-white/80 drop-shadow-sm" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
               </svg>
               即将上线的功能
@@ -57,26 +57,33 @@ export default function InfoSection() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {upcomingFeatures.map((feature, i) => (
-              <div key={feature.id} className="relative flex flex-col p-6 md:p-8 rounded-[24px] md:rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-all overflow-hidden">
-
-                <div className="flex items-start gap-3 mb-5">
-                  <div className="w-9 h-9 md:w-10 md:h-10 shrink-0 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shadow-[inset_0_1px_4px_rgba(255,255,255,0.1)]">
-                    {feature.icon}
+              <div 
+                key={feature.id} 
+                className="relative flex flex-col p-6 md:p-8 rounded-[24px] md:rounded-3xl overflow-hidden group transition-all duration-700 hover:scale-[0.98]"
+                style={{ boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(255, 255, 255, 0.05)" }}
+              >
+                <div className="absolute inset-0 z-0 pointer-events-none" style={{ backdropFilter: "blur(8px)", filter: "url(#glass-distortion)", isolation: "isolate" }} />
+                <div className="absolute inset-0 z-10 pointer-events-none bg-white/[0.12] group-hover:bg-white/[0.2] transition-colors duration-500" />
+                <div className="absolute inset-0 z-20 pointer-events-none" style={{ boxShadow: "inset 1px 1px 1px 0 rgba(255, 255, 255, 0.3), inset -1px -1px 0.5px 0 rgba(255, 255, 255, 0.1)" }} />
+                
+                <div className="relative z-30">
+                  <div className="flex items-start gap-3 mb-5">
+                    <div className="w-9 h-9 md:w-10 md:h-10 shrink-0 rounded-xl bg-white/20 border border-white/40 flex items-center justify-center shadow-sm">
+                      {feature.icon}
+                    </div>
+                    
+                    <h3 className="text-lg md:text-xl font-bold text-white tracking-widest flex items-center flex-wrap gap-1 md:gap-2.5 mt-1" style={{ fontFamily: "'Noto Serif SC', serif", textShadow: "0 2px 6px rgba(0,0,0,0.6)" }}>
+                      {feature.title}
+                      <span className="inline-flex items-center gap-1.5 translate-y-[1px]" style={{ textShadow: "none" }}>
+                        <span className="w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse drop-shadow-md"></span>
+                        <span className="text-white/90 text-[10px] md:text-[11px] tracking-[0.15em] font-medium drop-shadow-md">准备中</span>
+                      </span>
+                    </h3>
                   </div>
-                  
-                  {/* 微调这里的 gap */}
-                  <h3 className="text-lg md:text-xl font-semibold text-white tracking-widest flex items-center flex-wrap gap-1 md:gap-2.5 mt-1" style={{ fontFamily: "'Noto Serif SC', serif", textShadow: "0 2px 6px rgba(0,0,0,0.3)" }}>
-                    {feature.title}
-                    <span className="inline-flex items-center gap-1.5 translate-y-[1px]" style={{ textShadow: "none" }}>
-                      <span className="w-1.5 h-1.5 rounded-full bg-white/40 animate-pulse"></span>
-                      <span className="text-white/40 text-[10px] md:text-[11px] tracking-[0.15em] font-light">准备中</span>
-                    </span>
-                  </h3>
+                  <p className="text-xs md:text-sm font-medium leading-relaxed tracking-wider text-white/95 drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">
+                    {feature.desc}
+                  </p>
                 </div>
-
-                <p className="text-xs md:text-sm font-light leading-relaxed tracking-wider text-white/80" style={crispTextStyle}>
-                  {feature.desc}
-                </p>
               </div>
             ))}
           </div>
@@ -86,7 +93,7 @@ export default function InfoSection() {
         <div>
           <div className="mb-10 md:mb-12 flex flex-col items-center md:items-start text-center md:text-left">
             <h2 className="text-xl md:text-3xl font-bold mb-3 md:mb-4 tracking-wider flex items-center gap-2.5" style={glassHeadingStyle}>
-              <svg className="w-6 h-6 md:w-7 md:h-7 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <svg className="w-6 h-6 md:w-7 md:h-7 text-white/80 drop-shadow-sm" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
               奇点教育团队
@@ -104,24 +111,31 @@ export default function InfoSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="group relative flex flex-col p-6 md:p-8 rounded-[24px] md:rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md transition-all duration-500 hover:-translate-y-2 hover:bg-white/10 overflow-hidden"
+                className="group relative flex flex-col p-6 md:p-8 rounded-[24px] md:rounded-3xl overflow-hidden transition-all duration-700 hover:-translate-y-2"
+                style={{ boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(255, 255, 255, 0.05)" }}
               >
-                <div className="flex flex-col gap-4 mb-5">
-                  <div className="w-11 h-11 md:w-12 md:h-12 shrink-0 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center shadow-[inset_0_1px_4px_rgba(255,255,255,0.1)] group-hover:bg-white/10 transition-colors">
-                    {member.icon}
-                  </div>
-                  <div>
-                    <h3 className="text-lg md:text-xl font-semibold text-white tracking-widest mb-1.5" style={{ fontFamily: "'Noto Serif SC', serif", textShadow: "0 2px 6px rgba(0,0,0,0.3)" }}>
-                      {member.role}
-                    </h3>
-                    <div className="inline-block px-2 py-0.5 md:px-2.5 md:py-1 rounded bg-white/5 border border-white/5 text-white/50 text-[10px] md:text-xs tracking-wider" style={{ textShadow: "0 1px 2px rgba(0,0,0,0.4)" }}>
-                      {member.tag}
+                <div className="absolute inset-0 z-0 pointer-events-none" style={{ backdropFilter: "blur(8px)", filter: "url(#glass-distortion)", isolation: "isolate" }} />
+                <div className="absolute inset-0 z-10 pointer-events-none bg-white/[0.12] group-hover:bg-white/[0.2] transition-colors duration-500" />
+                <div className="absolute inset-0 z-20 pointer-events-none" style={{ boxShadow: "inset 1px 1px 1px 0 rgba(255, 255, 255, 0.3), inset -1px -1px 0.5px 0 rgba(255, 255, 255, 0.1)" }} />
+                
+                <div className="relative z-30">
+                  <div className="flex flex-col gap-4 mb-5">
+                    <div className="w-11 h-11 md:w-12 md:h-12 shrink-0 rounded-2xl bg-white/20 border border-white/40 flex items-center justify-center shadow-sm group-hover:bg-white/30 transition-colors">
+                      {member.icon}
+                    </div>
+                    <div>
+                      <h3 className="text-lg md:text-xl font-bold text-white tracking-widest mb-1.5 drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]" style={{ fontFamily: "'Noto Serif SC', serif" }}>
+                        {member.role}
+                      </h3>
+                      <div className="inline-block px-2 py-0.5 md:px-2.5 md:py-1 rounded bg-white/20 border border-white/30 text-white/90 text-[10px] md:text-xs tracking-wider shadow-[inset_0_0_5px_rgba(255,255,255,0.1)] drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
+                        {member.tag}
+                      </div>
                     </div>
                   </div>
+                  <p className="text-xs md:text-sm font-medium leading-relaxed tracking-wider text-white/95 drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">
+                    {member.desc}
+                  </p>
                 </div>
-                <p className="text-xs md:text-sm font-light leading-relaxed tracking-wider text-white/80" style={crispTextStyle}>
-                  {member.desc}
-                </p>
               </motion.div>
             ))}
           </div>
@@ -132,18 +146,31 @@ export default function InfoSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="relative w-full rounded-[24px] md:rounded-[2rem] bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-all p-8 md:p-12 flex flex-col lg:flex-row items-center justify-between gap-8 overflow-hidden"
+          className="relative w-full rounded-[24px] md:rounded-[2rem] p-8 md:p-12 flex flex-col lg:flex-row items-center justify-between gap-8 overflow-hidden group transition-all duration-700 hover:scale-[0.98]"
+          style={{ boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(255, 255, 255, 0.05)" }}
         >
-          <div className="flex flex-col text-center lg:text-left relative z-10 max-w-lg">
-            <h2 className="text-xl md:text-2xl font-semibold mb-2 tracking-widest text-white/95" style={{ fontFamily: "'Noto Serif SC', serif", textShadow: "0 2px 8px rgba(0,0,0,0.4)" }}>联系我们</h2>
-            <p className="text-xs md:text-sm tracking-widest Text-white/80" style={crispTextStyle}>欢迎加入团队、合作或求职咨询。</p>
+          {/* 母体玻璃：保留所有的模糊和 SVG 滤镜扭曲 */}
+          <div className="absolute inset-0 z-0 pointer-events-none" style={{ backdropFilter: "blur(8px)", filter: "url(#glass-distortion)", isolation: "isolate" }} />
+          <div className="absolute inset-0 z-10 pointer-events-none bg-white/[0.12] group-hover:bg-white/[0.18] transition-colors duration-500" />
+          <div className="absolute inset-0 z-20 pointer-events-none" style={{ boxShadow: "inset 1px 1px 1px 0 rgba(255, 255, 255, 0.3), inset -1px -1px 0.5px 0 rgba(255, 255, 255, 0.1)" }} />
+
+          <div className="flex flex-col text-center lg:text-left relative z-30 max-w-lg">
+            <h2 className="text-xl md:text-2xl font-bold mb-2 tracking-widest text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]" style={{ fontFamily: "'Noto Serif SC', serif" }}>联系我们</h2>
+            <p className="text-xs md:text-sm tracking-widest text-white/90 drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">欢迎加入团队、合作或求职咨询。</p>
           </div>
 
-          <a href="mailto:contact@eju.aircore.org" className="relative group/mail flex items-center justify-center z-10 w-full lg:w-auto">
-            <div className="absolute inset-0 bg-white/5 rounded-full blur-md group-hover:bg-white/10 transition-all duration-500"></div>
-            <div className="relative w-full text-center px-6 py-3 md:px-8 md:py-4 rounded-full bg-white/5 border border-white/10 backdrop-blur-md flex items-center justify-center gap-2.5 transition-all duration-500 group-hover:scale-95 group-hover:bg-white/10 cursor-pointer">
-              <svg className="w-4 h-4 md:w-5 md:h-5 text-white/70 group-hover/mail:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-              <span className="text-white/95 text-sm md:text-[15px] font-medium md:font-semibold tracking-wider" style={{ textShadow: "0 1px 4px rgba(0,0,0,0.3)" }}>contact@eju.aircore.org</span>
+          <a href="mailto:contact@eju.aircore.org" className="relative group/mail flex items-center justify-center z-30 w-full lg:w-auto">
+            {/* 👑 终极修复：去除了导致 WebKit 渲染 Bug 的嵌套 backdropFilter 模糊 */}
+            <div 
+              className="relative w-full text-center px-6 py-3 md:px-8 md:py-4 rounded-full flex items-center justify-center gap-2.5 transition-all duration-500 cursor-pointer overflow-hidden border border-white/20 bg-white/10 group-hover/mail:bg-white/20 shadow-[0_4px_12px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.2)]"
+            >
+              {/* 仅使用纯粹的内阴影模拟玻璃体积感，绝不碰 blur */}
+              <div className="absolute inset-0 z-0 pointer-events-none rounded-full" style={{ boxShadow: "inset 1px 1px 2px rgba(255,255,255,0.3), inset -1px -1px 2px rgba(255,255,255,0.05)" }} />
+              
+              <div className="relative z-30 flex items-center justify-center gap-2.5">
+                <svg className="w-4 h-4 md:w-5 md:h-5 text-white/90 drop-shadow-sm group-hover/mail:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                <span className="text-white text-sm md:text-[15px] font-bold tracking-wider drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">contact@eju.aircore.org</span>
+              </div>
             </div>
           </a>
         </motion.div>

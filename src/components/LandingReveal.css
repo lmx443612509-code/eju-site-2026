@@ -1,0 +1,20 @@
+.preloader-backdrop {
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  will-change: transform, clip-path;
+}
+
+.preloader-revealer {
+  will-change: transform, clip-path;
+}
+
+.pbc-svg {
+  will-change: transform;
+}
+
+.reveal-container {
+  background-color: transparent !important;
+}
+
+.hero {
+  background-color: transparent !important;
+}
